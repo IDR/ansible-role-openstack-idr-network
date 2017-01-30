@@ -6,11 +6,13 @@
   when: "{{ idr_network_route_external }}"
   # Automatically creates variable openstack_networks
 
-- os_network:
+- name: idr | create network
+  os_network:
     name: "{{ idr_network_name }}"
     state: present
 
-- os_subnet:
+- name: idr | create subnet
+  os_subnet:
     cidr: "{{ idr_network_subnet }}"
     dns_nameservers: "{{ idr_network_dns }}"
     name: "{{ idr_network_subnet_name }}"

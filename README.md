@@ -1,7 +1,7 @@
 Openstack IDR Network
 =====================
 
-Create an Openstack network including external router for use with the IDR playbooks.
+Create an Openstack network including optional external router for use with the IDR playbooks.
 
 
 Role Variables
@@ -18,8 +18,6 @@ Optional variables:
 - `idr_network_subnet_name`: Subnet name
 - `idr_network_router_name`: Router name
 - `idr_network_dns`: List of DNS servers (default: Google DNS server)
-
-- `idr_environment`: Use this as a group prefix. This is required to ensure servers can lookup the address of other servers in the group, and is particularly important if multiple groups of servers are running in the same project. The default is `idr` but you should almost always set it to something else.
 
 
 Author Information
