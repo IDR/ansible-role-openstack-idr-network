@@ -11,9 +11,9 @@ Defaults: `defaults/main.yml`
 
 Required variables:
 - `idr_network_name`: Base name for the IDR network components
-- `idr_network_external_name`: Name of the external network (this should be created by an OpenStack admin)
 
 Optional variables:
+- `idr_network_route_external`: If `True` automatically lookup and connect to an external network, if `False` create an internal router only, default `True`
 - `idr_network_subnet`: Subnet CIDR
 - `idr_network_subnet_name`: Subnet name
 - `idr_network_router_name`: Router name
