@@ -1,20 +1,54 @@
 ---
 # Playbook for creating OpenStack IDR Networks
 
-- os_network:
+- name: idr | network facts
+  os_networks_facts:
+  when: "{{ idr_network_route_external }}"
+  # Automatically creates variable openstack_networks
+
+- name: idr | create network
+  os_network:
     name: "{{ idr_network_name }}"
     state: present
 
-- os_subnet:
+- name: idr | create subnet
+  os_subnet:
     cidr: "{{ idr_network_subnet }}"
     dns_nameservers: "{{ idr_network_dns }}"
     name: "{{ idr_network_subnet_name }}"
     network_name: "{{ idr_network_name }}"
     state: present
 
-- os_router:
+- name: idr | debug external network
+  debug:
+    msg: >-
+      "External network: "
+      {{
+         ['name', 'id'] | map('extract', openstack_networks |
+         selectattr('router:external', 'equalto', True) |
+         first) | list
+      }}
+    verbosity: 1
+  when: "{{ idr_network_route_external }}"
+
+- name: idr | create external router
+  os_router:
     interfaces:
     - "{{ idr_network_subnet_name }}"
     name: "{{ idr_network_router_name }}"
-    network: "{{ idr_network_external_name }}"
+    network: >-
+      {{
+        (openstack_networks |
+         selectattr("router:external", "equalto", True) |
+         first).id
+      }}
     state: present
+  when: "{{ idr_network_route_external }}"
+
+- name: idr | create internal router
+  os_router:
+    interfaces:
+    - "{{ idr_network_subnet_name }}"
+    name: "{{ idr_network_router_name }}"
+    state: present
+  when: "{{ not idr_network_route_external }}"
