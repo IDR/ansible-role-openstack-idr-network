@@ -4,6 +4,7 @@
 - name: idr | network facts
   os_networks_facts:
   when: "{{ idr_network_route_external }}"
+  always_run: yes
   # Automatically creates variable openstack_networks
 
 - name: idr | create network
