@@ -20,7 +20,7 @@ Optional variables:
 - `idr_network_subnet`: Subnet CIDR
 - `idr_network_subnet_name`: Subnet name
 - `idr_network_router_name`: Router name
-- `idr_network_dns`: List of DNS servers (default: Google DNS server)
+- `idr_network_dns`: List of DNS servers (default: Google's DNS servers)
 
 
 Author Information
