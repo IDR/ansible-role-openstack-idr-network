@@ -4,7 +4,7 @@
 - name: idr | network facts
   os_networks_facts:
   when: idr_network_route_external == 'auto'
-  check_mode: no
+  check_mode: false
   # Automatically creates variable openstack_networks
 
 - name: idr | create network
@@ -35,7 +35,7 @@
 - name: idr | create external router (auto-detected external)
   os_router:
     interfaces:
-    - "{{ idr_network_subnet_name }}"
+      - "{{ idr_network_subnet_name }}"
     name: "{{ idr_network_router_name }}"
     network: >-
       {{
@@ -49,7 +49,7 @@
 - name: idr | create external router (specified external)
   os_router:
     interfaces:
-    - "{{ idr_network_subnet_name }}"
+      - "{{ idr_network_subnet_name }}"
     name: "{{ idr_network_router_name }}"
     network: "{{ idr_network_route_external }}"
     state: present
@@ -60,7 +60,7 @@
 - name: idr | create internal router
   os_router:
     interfaces:
-    - "{{ idr_network_subnet_name }}"
+      - "{{ idr_network_subnet_name }}"
     name: "{{ idr_network_router_name }}"
     state: present
   when: not idr_network_route_external
