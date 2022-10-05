@@ -2,18 +2,18 @@
 # Playbook for creating OpenStack IDR Networks
 
 - name: idr | network facts
-  os_networks_facts:
+  openstack.cloud.networks_info:
   when: idr_network_route_external == 'auto'
   check_mode: false
   # Automatically creates variable openstack_networks
 
 - name: idr | create network
-  os_network:
+  openstack.cloud.network:
     name: "{{ idr_network_name }}"
     state: present
 
 - name: idr | create subnet
-  os_subnet:
+  openstack.cloud.subnet:
     cidr: "{{ idr_network_subnet }}"
     dns_nameservers: "{{ idr_network_dns }}"
     name: "{{ idr_network_subnet_name }}"
@@ -33,7 +33,7 @@
   when: idr_network_route_external == 'auto'
 
 - name: idr | create external router (auto-detected external)
-  os_router:
+  openstack.cloud.router:
     interfaces:
       - "{{ idr_network_subnet_name }}"
     name: "{{ idr_network_router_name }}"
@@ -47,7 +47,7 @@
   when: idr_network_route_external == 'auto'
 
 - name: idr | create external router (specified external)
-  os_router:
+  openstack.cloud.router:
     interfaces:
       - "{{ idr_network_subnet_name }}"
     name: "{{ idr_network_router_name }}"
@@ -58,7 +58,7 @@
     (idr_network_route_external != 'auto')
 
 - name: idr | create internal router
-  os_router:
+  openstack.cloud.router:
     interfaces:
       - "{{ idr_network_subnet_name }}"
     name: "{{ idr_network_router_name }}"
